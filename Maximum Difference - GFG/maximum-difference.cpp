@@ -24,10 +24,6 @@ class Solution{
               else{
                   left.push(temp.top());
                   }
-                  while(!vec.empty()){
-                      temp.push(vec.back());
-                      vec.pop_back();
-              }
           }
         temp.push(A[i]);
       }
@@ -46,10 +42,6 @@ class Solution{
               else{
                   right.push(temp.top());
                   }
-                  while(!vec.empty()){
-                      temp.push(vec.back());
-                      vec.pop_back();
-              }
           }
         temp.push(A[i]);
       }
