@@ -7,8 +7,21 @@ class Solution{
   public:
     int findExtra(int a[], int b[], int n) {
         // add code here.
-        for(int i = 0; i<n;i++){
-            if(a[i]!=b[i]) return i;
+        int low = 0;
+        int high = n-1;
+        
+        while(low<= high){
+            int mid = (low+high)>>1;
+            if(b[mid]==a[mid]){
+                low = mid+1;
+            }
+            else if(a[mid]<b[mid]){
+                if(a[mid] == b[mid-1]) high = mid -1;
+                else return mid;
+            }
+            else{
+                return mid;
+            }
         }
         return -1;
     }
