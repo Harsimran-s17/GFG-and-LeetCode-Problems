@@ -13,8 +13,6 @@ public:
 	    // code here   
 	    int row = arr.size();
 	    int col = arr[0].size();
-	    int rowSt = 0;
-	    int colSt = 0;
 	    
 	    for(int i = 0; i < row; i++){
 	        for(int j = 0; j < col; j++){
