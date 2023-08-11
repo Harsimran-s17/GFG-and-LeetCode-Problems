@@ -1,0 +1,2 @@
+# Write your MySQL query statement below
+select distinct s.name from salesPerson as s left join (select o.sales_id from orders as o inner join company as c on c.com_id=o.com_id where c.name="RED")as nt  on s.sales_id=nt.sales_id  where nt.sales_id is null;
