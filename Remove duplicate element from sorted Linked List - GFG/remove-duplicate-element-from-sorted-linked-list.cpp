@@ -69,20 +69,17 @@ struct Node {
 Node *removeDuplicates(Node *head)
 {
  // your code goes here
- unordered_set<int> s;
- 
- Node* temp = head;
- Node * prev = NULL;
- 
- while(temp){
-     if(s.find(temp->data) == s.end()){
-         s.insert(temp->data);
-         prev = temp;
+ Node *prev = head;
+ Node *ans = head;
+ head = head->next;
+ while(head){
+     if(prev->data == head->data){
+         prev->next = head->next;
      }
      else{
-         prev->next = temp->next;
+         prev = head;
      }
-     temp = temp->next;
+     head = head->next;
  }
- return head;
+ return ans;
 }
