@@ -13,38 +13,19 @@ class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
         stack<TreeNode*> st;
-        unordered_map<TreeNode*,int> m;
         vector<int> vec;
-        while(root){
-            if(root->left && m.find(root) == m.end()){
+        while(true){
+            if(root){
                 st.push(root);
                 root = root->left;
             }
-            else if(root->right){
-                if(!m[root])
-                vec.push_back(root->val);
-                m[root]++;
-                root = root->right;
-            }
-            else {
-                if(!m[root])
-                vec.push_back(root->val);
-                m[root]++;
-                if(!st.empty()){
-                    root = st.top();
-                    st.pop();
-                    if(!m[root])
-                    vec.push_back(root->val);
-                    m[root]++;
-                    if(root->right)
-                    root = root->right;
-                    else if(!st.empty()){
-                        root = st.top();
-                        st.pop();
-                    }
-                    else root = NULL;
+            else if(st.empty()) break;
+            else{
+                vec.push_back(st.top()->val);
+                if(st.top()->right){
+                    root = st.top()->right;
                 }
-                else root = NULL;
+                st.pop();
             }
         }
         return vec;
