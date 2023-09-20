@@ -93,7 +93,6 @@ struct Node
     int data;
     struct Node* left;
     struct Node* right;
-    
     Node(int x){
         data = x;
         left = right = NULL;
@@ -105,21 +104,22 @@ class Solution{
     public:
     //Function to check whether a binary tree is balanced or not.
     
-    int ans(Node *root, bool &iB){
+    int solve(Node * root, bool& ans){
         if(!root) return 0;
-        int lH = ans(root->left,iB) + 1;
-        int rH = ans(root->right,iB) + 1;
-        if(abs(lH-rH)>1) iB = false;
-        return max(lH,rH);
-        
+        int lh = solve(root->right, ans);
+        int rh = solve(root->left,ans);
+        int height  = 1 + max(lh, rh);
+        int diff = lh - rh;
+        if(abs(diff)>=2) ans = false;
+        return height;
     }
     
     bool isBalanced(Node *root)
     {
         //  Your Code here
-        bool iB = true;
-        ans(root, iB);
-        return iB;
+        bool ans = true;
+        solve(root, ans);
+        return ans;
     }
 };
 
