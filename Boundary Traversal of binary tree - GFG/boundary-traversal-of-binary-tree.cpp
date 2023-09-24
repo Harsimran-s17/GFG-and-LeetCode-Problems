@@ -106,56 +106,59 @@ struct Node
 class Solution {
 public:
 
-    void preOrder(Node * root, vector<int> &leaf){
-        if(!root) return;
-        if(!root->left &&!root->right) leaf.push_back(root->data);
-        preOrder(root->left, leaf);
-        preOrder(root->right, leaf);
+    void leafNodes(Node * root, vector<int> &vec){
+        if(!root->left && !root->right) vec.push_back(root->data);
+        if(root->left) leafNodes(root->left, vec);
+        if(root->right) leafNodes(root->right, vec);
     }
-
     vector <int> boundary(Node *root)
     {
-        //Your code here 
-        queue<Node*> q;
-        vector<int> vec;
-        vector<int> vec2;
+        //Your code here
+        vector<int> ans;
+        vector<int> left;
         vector<int> leaf;
-        int level = 0;
-        bool flag = true;
+        vector<int> right;
         
-        Node * t = new Node();
-        t->data = -1;
-        q.push(root);
-        q.push(t);
-        vec.push_back(root->data);
-        if(!root->left && !root->right) return vec;
-        
+        queue<Node *> q;
+        if(root) q.push(root);
         while(!q.empty()){
-            Node * temp = q.front();
-            if(temp->left) q.push(temp->left);
-            if(temp->right) q.push(temp->right);
-            q.pop();
-            if(q.front()->data ==-1 ){
-                if(temp!=root && root->right && !(!temp->left && !temp->right))
-                    vec2.push_back(temp->data);
+            int n = q.size();
+            for(int i = 0; i < n; i++){
+                Node * temp = q.front();
+                if(temp->data == -1) {
+                    q.pop(); 
+                    continue;
+                }
+                Node * t = new Node();
+                t->data = -1;
                 q.pop();
-                if(q.empty()) break;
-                q.push(t);
-                if((!q.front()->left && !q.front()->right)) flag = false;
-                if(flag && q.front()!=root && root->left)
-                vec.push_back(q.front()->data);
+                if(temp->left) q.push(temp->left);
+                if(temp->right) q.push(temp->right);
+                
+                if(!temp->left && !temp->right){
+                   q.push(t);
+                   continue;
+                } 
+                else if((i==0 && root->left && !(!temp->left && !temp->right)) || root==temp) left.push_back(temp->data);
+                else if(i==n-1 && root->right && !(!temp->left && !temp->right)) right.push_back(temp->data);
             }
         }
+        leafNodes(root,leaf);
+        // root = root->right;
+        // while(root){
+        //     if(!(!root->left && !root->right))
+        //     right.push_back(root->data);
+        //     root = root->right;
+        // }
+        ans.insert(ans.end(), left.begin(), left.end());
+        ans.insert(ans.end(), leaf.begin(), leaf.end());
+        reverse(right.begin(), right.end());
+        ans.insert(ans.end(), right.begin(), right.end());
         
-        preOrder(root, leaf);
-        for(auto i : leaf) vec.push_back(i);
-        
-        reverse(vec2.begin(), vec2.end());
-        for(auto i : vec2) vec.push_back(i); 
-        
-        return vec;
+        return ans;
     }
 };
+
 
 //{ Driver Code Starts.
 
