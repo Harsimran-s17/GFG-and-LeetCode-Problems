@@ -54,29 +54,6 @@ class Solution
         return (f1|f2);
     }
     
-    Node* ans(Node * root, int n, unordered_map<Node*, int> m, Node* &ansr, bool &flag){
-        if(root->data == n) {
-            if(m.find(root)!=m.end() && flag) {
-            ansr = root;
-            flag = false;
-            return NULL;
-        }
-            return root;
-        }
-        Node * t1 = NULL;
-        Node * t2 = NULL;
-        if(root->left) t1 = ans(root->left, n, m, ansr, flag);
-        if(root->right) t2 = ans(root->right, n, m,ansr, flag);
-        if((t1||t2) && m.find(root)!=m.end() && flag) {
-            ansr = root;
-            flag = false;
-            return NULL;
-        }
-        if(t1) return t1;
-        else if(t2) return t2;
-        else return NULL;
-    }
-    
     Node* lca(Node* root ,int n1 ,int n2 )
     {
        //Your code here 
